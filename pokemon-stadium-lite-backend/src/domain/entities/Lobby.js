@@ -15,10 +15,6 @@ class Lobby {
   addPlayer(player) {
     // El lobby permite 2 jugadores a la vez
     if (this.players.length == 2) {
-      console.log("los jugadores son ");
-      for(let i = 0; i<2; i++){
-        console.log(this.players[i].nickname)
-      }
       return false; 
     }
     this.players.push(player);

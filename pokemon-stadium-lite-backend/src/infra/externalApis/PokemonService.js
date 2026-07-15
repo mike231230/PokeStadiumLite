@@ -33,7 +33,6 @@ class PokemonService {
         throw new Error(`Error en la API de Pokémon: ${response.statusText}`);
       }
       const res = await response.json();
-      console.log(res)
       
       return res.data; 
     } catch (error) {

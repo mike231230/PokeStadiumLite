@@ -6,6 +6,7 @@ export default function LobbyView({ socket }) {
     const [hasJoined, setHasJoined] = useState(false);
     const [lobbyStatus, setLobbyStatus] = useState('waiting');
     const [myPlayerInfo, setMyPlayerInfo] = useState(null);
+    const [opponentInfo, setOpponentInfo] = useState(null);
 
     const [activeTurn, setActiveTurn] = useState(null);
 
@@ -21,9 +22,13 @@ export default function LobbyView({ socket }) {
                 setActiveTurn(data.activeTurnPlayer);
             }
 
+            // Separamos y guardamos a ambos jugadores en el estado de React
             if (data.players) {
                 const me = data.players.find(p => p.nickname === nickname);
                 if (me) setMyPlayerInfo(me);
+
+                const rival = data.players.find(p => p.nickname !== nickname);
+                if (rival) setOpponentInfo(rival);
             }
         });
         socket.on('error', (errorData) => {
@@ -61,9 +66,12 @@ export default function LobbyView({ socket }) {
         socket.emit('ready', { lobbyId: 'SINGLE_LOBBY', nickname });
     };
 
+
+
+
     if(lobbyStatus === 'battling' || lobbyStatus === 'finished') {
         return(
-            <BattleView socket={socket} nickname={nickname} initialTurn={activeTurn}/>
+            <BattleView socket={socket} nickname={nickname} initialTurn={activeTurn} lobbyId="SINGLE_LOBBY" myPlayer={myPlayerInfo} opponentPlayer={opponentInfo} />
         )
     }
 

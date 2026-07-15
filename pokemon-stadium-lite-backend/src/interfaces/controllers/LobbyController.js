@@ -75,6 +75,8 @@ class LobbyController {
       // Emite el resultado del turno con el daño y HP actualizado: 'turn_result'
       io.to(lobbyId).emit('turn_result', result);
 
+      io.to(lobbyId).emit('lobby_status', result.lobby)
+
       // Si la batalla terminó, emite 'battle_end'
       if (result.battleEnded) {
         io.to(lobbyId).emit('battle_end', { winner: result.winner });

@@ -8,7 +8,6 @@ class ExecuteAttackUseCase {
 
   async execute(lobbyId, attackerNickname) {
     // 1. Obtener el lobby actual desde la base de datos
-    console.log("empezando ataque")
     const lobby = await this.lobbyRepository.getById(lobbyId);
     if (!lobby) throw new Error('Lobby no encontrado');
 
@@ -65,7 +64,8 @@ class ExecuteAttackUseCase {
       switchedPokemon,
       battleEnded,
       winner: lobby.winner,
-      nextTurn: lobby.activeTurnPlayer
+      nextTurn: lobby.activeTurnPlayer,
+      lobby
     };
   }
 }
